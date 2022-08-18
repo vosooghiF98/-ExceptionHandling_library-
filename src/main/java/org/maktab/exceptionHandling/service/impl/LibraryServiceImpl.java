@@ -1,6 +1,7 @@
 package org.maktab.exceptionHandling.service.impl;
 
 import org.maktab.exceptionHandling.entities.Library;
+import org.maktab.exceptionHandling.exceptions.LibraryFullException;
 import org.maktab.exceptionHandling.repository.LibraryRepository;
 import org.maktab.exceptionHandling.repository.impl.LibraryRepositoryImpl;
 import org.maktab.exceptionHandling.service.LibraryService;
@@ -39,7 +40,9 @@ public class LibraryServiceImpl implements LibraryService {
     }
 
     @Override
-    public boolean isFull(Library library) throws SQLException {
-        return libraryRepository.memberCount(library) == library.getCapacity();
+    public void isFull(Library library) throws SQLException {
+        if(libraryRepository.memberCount(library) == library.getCapacity()){
+            throw new LibraryFullException(library.getName() + " is full");
+        }
     }
 }

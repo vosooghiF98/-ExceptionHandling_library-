@@ -12,29 +12,27 @@ import java.sql.SQLException;
 public class MemberServiceImpl implements MemberService {
     MemberRepository memberRepository = new MemberRepositoryImpl();
     LibraryService libraryService = new LibraryServiceImpl();
+
     @Override
     public void register(String firstName, String lastName, int libraryId) throws SQLException {
-        Library library = libraryService.loadById(libraryId);
-        if (libraryService.isFull(library)) {
-            Member member = new Member(firstName, lastName, libraryId);
-            memberRepository.save(member);
-        }
+        Member member = new Member(firstName, lastName, libraryId);
+        memberRepository.save(member);
     }
 
     @Override
-    public void unRegister(String firstName, String lastName ) throws SQLException {
-        Member member = new Member(firstName,lastName,-1);
+    public void unRegister(String firstName, String lastName) throws SQLException {
+        Member member = new Member(firstName, lastName, -1);
         memberRepository.remove(member);
     }
 
     @Override
     public Member load(String firstName, String lastName) throws SQLException {
-        Member member = new Member(firstName,lastName,-1);
+        Member member = new Member(firstName, lastName, -1);
         return memberRepository.load(member);
     }
 
     @Override
     public void edit(Member member, String newFirstName, String newLastName) throws SQLException {
-        memberRepository.edit(member,newFirstName,newLastName);
+        memberRepository.edit(member, newFirstName, newLastName);
     }
 }

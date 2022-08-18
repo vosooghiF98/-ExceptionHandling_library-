@@ -18,6 +18,6 @@ public interface LibraryService {
 
     int getMemberCount(String firstName, String lastName) throws SQLException;
 
-    boolean isFull(Library library)throws SQLException;
+    void isFull(Library library)throws SQLException;
 
 }
