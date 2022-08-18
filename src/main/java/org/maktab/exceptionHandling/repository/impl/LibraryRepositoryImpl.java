@@ -2,7 +2,6 @@ package org.maktab.exceptionHandling.repository.impl;
 
 import org.maktab.exceptionHandling.config.DBConfig;
 import org.maktab.exceptionHandling.entities.Library;
-import org.maktab.exceptionHandling.entities.Member;
 import org.maktab.exceptionHandling.repository.LibraryRepository;
 
 import java.sql.PreparedStatement;
@@ -23,7 +22,6 @@ public class LibraryRepositoryImpl implements LibraryRepository {
 
     @Override
     public Library load(Library library) throws SQLException {
-
         String query = "select * from library where name = ? and capacity = ?";
         try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
             preparedStatement.setString(1, library.getName());
@@ -31,6 +29,21 @@ public class LibraryRepositoryImpl implements LibraryRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return new Library(resultSet.getString("name"), resultSet.getInt("capacity"));
+            } else {
+                return null;
+            }
+        }
+    }
+    @Override
+    public Library loadById(int id) throws SQLException {
+        String query = "select * from library where id = ?";
+        try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                Library library = new Library(resultSet.getString("name"), resultSet.getInt("capacity"));
+                library.setId(resultSet.getInt("id"));
+                return library;
             } else {
                 return null;
             }
@@ -61,17 +74,16 @@ public class LibraryRepositoryImpl implements LibraryRepository {
     }
 
     @Override
-    public int memberCount(Member member) throws SQLException {
+    public int memberCount(Library library) throws SQLException {
         String query = """
-                select count(*) from member where library_id = ?
+                select count(*) from member m inner join library l on l.id = m.library_id where l.id = ?
                                 """;
         try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
-            preparedStatement.setInt(1, member.getLibraryId());
+            preparedStatement.setInt(1, library.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
-            int counter;
             if (resultSet.next()) {
-                counter = resultSet.getInt(1);
-                return counter;
+                library.setCountMember(resultSet.getInt(1));
+                return library.getCountMember();
             } else {
                 return 0;
             }

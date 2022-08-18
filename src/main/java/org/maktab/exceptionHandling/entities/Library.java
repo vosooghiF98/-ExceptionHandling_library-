@@ -1,13 +1,10 @@
 package org.maktab.exceptionHandling.entities;
 
-import org.maktab.exceptionHandling.IdGenerator;
-import org.maktab.exceptionHandling.exceptions.LibraryFullException;
-
 public class Library {
-
+	private int id;
 	private String name;
 	private final int capacity;
-
+	private int countMember;
 
 	public Library(String name ,int capacity) {
 		this.name = name;
@@ -27,4 +24,19 @@ public class Library {
 		return capacity;
 	}
 
+	public int getCountMember() {
+		return countMember;
+	}
+
+	public void setCountMember(int countMember) {
+		this.countMember = countMember;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 }
