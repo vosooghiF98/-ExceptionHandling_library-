@@ -1,11 +1,10 @@
-package org.maktab.exceptionHandling.repository;
+package org.maktab.exceptionHandling.service;
 
 import org.maktab.exceptionHandling.entities.Library;
-import org.maktab.exceptionHandling.entities.Member;
 
 import java.sql.SQLException;
 
-public interface LibraryRepository {
+public interface LibraryService {
 
     void save(Library library) throws SQLException;
 
@@ -15,5 +14,8 @@ public interface LibraryRepository {
 
     void delete(Library library)throws SQLException;
 
-    int memberCount(Member member) throws SQLException;
+    int getMemberCount(String firstName, String lastName) throws SQLException;
+
+    boolean isFull(Library library)throws SQLException;
+
 }

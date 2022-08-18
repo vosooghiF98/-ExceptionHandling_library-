@@ -5,38 +5,23 @@ import org.maktab.exceptionHandling.exceptions.LibraryFullException;
 
 public class Library {
 
-	private Member[] members;
+	private String name;
 	private final int capacity;
-	private IdGenerator idGenerator;
 
-	public Library(int capacity, IdGenerator idGenerator) {
+
+	public Library(String name ,int capacity) {
+		this.name = name;
 		this.capacity = capacity;
-		this.members = new Member[capacity];
-		this.idGenerator = idGenerator;
 	}
 
-	public void register(Member member) throws LibraryFullException {
-		// TODO implement
-	}
-	
-	public Member unregister(int id) {
-		// TODO implement
-		return null;
+	public String getName() {
+		return name;
 	}
 
-	public int getMemberCount() {
-		// TODO implement
-		return 0;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	public boolean isFull() {
-		// TODO implement
-		return false;
-	}
-	
-	public Member[] getMembers() {
-		return members;
-	}
+
 
 	public int getCapacity() {
 		return capacity;

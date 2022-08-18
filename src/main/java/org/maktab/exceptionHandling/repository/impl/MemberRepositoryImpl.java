@@ -16,10 +16,10 @@ public class MemberRepositoryImpl implements MemberRepository {
                 insert into member (first_name, last_name, library_id) 
                 values (?,?,?)
                 """;
-        try(PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
             preparedStatement.setString(1, member.getFirstName());
             preparedStatement.setString(2, member.getLastName());
-            preparedStatement.setInt(3,member.getLibraryId());
+            preparedStatement.setInt(3, member.getLibraryId());
             preparedStatement.executeUpdate();
         }
     }
@@ -29,13 +29,13 @@ public class MemberRepositoryImpl implements MemberRepository {
         String query = """
                 select * from member where first_name = ? and last_name = ?
                 """;
-        try(PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
             preparedStatement.setString(1, member.getFirstName());
             preparedStatement.setString(2, member.getLastName());
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()){
-                return new Member(resultSet.getString("first_name"),resultSet.getString("last_name"),resultSet.getInt("library_id"));
-            }else {
+            if (resultSet.next()) {
+                return new Member(resultSet.getString("first_name"), resultSet.getString("last_name"), resultSet.getInt("library_id"));
+            } else {
                 return null;
             }
         }
@@ -46,9 +46,9 @@ public class MemberRepositoryImpl implements MemberRepository {
         String query = """
                 update member set first_name = ? , last_name = ? where first_name = ? and last_name = ?
                 """;
-        try(PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
-            preparedStatement.setString(1,newFirstName);
-            preparedStatement.setString(2,newLastName);
+        try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, newFirstName);
+            preparedStatement.setString(2, newLastName);
             preparedStatement.setString(3, member.getFirstName());
             preparedStatement.setString(4, member.getLastName());
             preparedStatement.executeUpdate();
@@ -61,10 +61,12 @@ public class MemberRepositoryImpl implements MemberRepository {
         String query = """
                 delete from member where first_name = ? and last_name = ?
                 """;
-        try(PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
             preparedStatement.setString(1, member.getFirstName());
             preparedStatement.setString(2, member.getLastName());
             preparedStatement.executeUpdate();
         }
     }
+
+
 }
