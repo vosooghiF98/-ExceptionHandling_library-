@@ -8,7 +8,7 @@ public class DBConfig {
     private static Connection connection;
     static {
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/","postgres","qazwsx123");
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/","postgres","a*1294278F");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -28,7 +28,9 @@ public class LibraryRepositoryImpl implements LibraryRepository {
             preparedStatement.setInt(2, library.getCapacity());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return new Library(resultSet.getString("name"), resultSet.getInt("capacity"));
+                Library library1 = new Library(resultSet.getString("name"), resultSet.getInt("capacity"));
+                library1.setId(resultSet.getInt("id"));
+                return library1;
             } else {
                 return null;
             }
@@ -84,8 +86,8 @@ public class LibraryRepositoryImpl implements LibraryRepository {
             preparedStatement.setInt(1, library.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                library.setCountMember(resultSet.getInt(1));
-                return library.getCountMember();
+
+                return resultSet.getInt(1);
             } else {
                 return 0;
             }
