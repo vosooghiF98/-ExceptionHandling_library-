@@ -42,22 +42,21 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public void edit(Member member, String newFirstName, String newLastName) throws SQLException {
+    public void edit(Member member) throws SQLException {
         String query = """
-                update member set first_name = ? , last_name = ? where first_name = ? and last_name = ?
+                update member set first_name = ? , last_name = ? where id = ?
                 """;
         try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
-            preparedStatement.setString(1, newFirstName);
-            preparedStatement.setString(2, newLastName);
-            preparedStatement.setString(3, member.getFirstName());
-            preparedStatement.setString(4, member.getLastName());
+            preparedStatement.setString(1, member.getFirstName());
+            preparedStatement.setString(2, member.getLastName());
+            preparedStatement.setInt(3, member.getId());
             preparedStatement.executeUpdate();
         }
 
     }
 
     @Override
-    public void remove(Member member) throws SQLException {
+    public void delete(Member member) throws SQLException {
         String query = """
                 delete from member where first_name = ? and last_name = ?
                 """;

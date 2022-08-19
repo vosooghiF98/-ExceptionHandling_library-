@@ -3,7 +3,7 @@ package org.maktab.exceptionHandling.entities;
 public class Library {
 	private int id;
 	private String name;
-	private final int capacity;
+	private int capacity;
 	private int countMember;
 
 	public Library(String name ,int capacity) {

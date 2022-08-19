@@ -34,6 +34,9 @@ public class LibraryRepositoryImpl implements LibraryRepository {
             }
         }
     }
+
+
+
     @Override
     public Library loadById(int id) throws SQLException {
         String query = "select * from library where id = ?";
@@ -51,13 +54,12 @@ public class LibraryRepositoryImpl implements LibraryRepository {
     }
 
     @Override
-    public void edit(Library library, String name, int capacity) throws SQLException {
-        String query = "update library set name = ? , capacity= ? where name = ? and capacity = ?";
+    public void edit(Library library) throws SQLException {
+        String query = "update library set name = ? , capacity= ? where id = ?";
         try (PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query)) {
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2, capacity);
-            preparedStatement.setString(3, library.getName());
-            preparedStatement.setInt(4, library.getCapacity());
+            preparedStatement.setString(1, library.getName());
+            preparedStatement.setInt(2, library.getCapacity());
+            preparedStatement.setInt(3, library.getId());
             preparedStatement.executeUpdate();
         }
     }
@@ -89,4 +91,6 @@ public class LibraryRepositoryImpl implements LibraryRepository {
             }
         }
     }
+
+
 }

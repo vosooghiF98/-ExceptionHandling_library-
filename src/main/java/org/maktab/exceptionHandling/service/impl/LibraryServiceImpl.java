@@ -1,5 +1,6 @@
 package org.maktab.exceptionHandling.service.impl;
 
+import org.maktab.exceptionHandling.base.BaseService;
 import org.maktab.exceptionHandling.entities.Library;
 import org.maktab.exceptionHandling.exceptions.LibraryFullException;
 import org.maktab.exceptionHandling.repository.LibraryRepository;
@@ -8,40 +9,29 @@ import org.maktab.exceptionHandling.service.LibraryService;
 
 import java.sql.SQLException;
 
-public class LibraryServiceImpl implements LibraryService {
-    LibraryRepository libraryRepository = new LibraryRepositoryImpl();
-    @Override
-    public void save(Library library) throws SQLException {
+public class LibraryServiceImpl extends LibraryService {
 
+
+    public LibraryServiceImpl(){
+        setBaseRepository(new LibraryRepositoryImpl());
+    }
+
+    public LibraryRepositoryImpl getLibraryRepositoryImpl(){
+        return (LibraryRepositoryImpl) super.getBaseRepository();
     }
 
     @Override
-    public Library load(Library library) throws SQLException {
+    protected Library loadById(int id) throws SQLException {
         return null;
     }
-    @Override
-    public Library loadById(int id) throws SQLException {
-        return null;
-    }
 
-    @Override
-    public void edit(Library library, String name, int capacity) throws SQLException {
-
-    }
-
-    @Override
-    public void delete(Library library) throws SQLException {
-
-    }
-
-    @Override
-    public int getMemberCount(String firstName, String lastName) throws SQLException {
-        return 0;
+    private int getMemberCount(Library library) throws SQLException {
+      return getLibraryRepositoryImpl().memberCount(library);
     }
 
     @Override
     public void isFull(Library library) throws SQLException {
-        if(libraryRepository.memberCount(library) == library.getCapacity()){
+        if(getMemberCount(library) == library.getCapacity()){
             throw new LibraryFullException(library.getName() + " is full");
         }
     }

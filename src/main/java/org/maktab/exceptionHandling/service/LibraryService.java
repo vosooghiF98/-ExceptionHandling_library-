@@ -1,23 +1,14 @@
 package org.maktab.exceptionHandling.service;
 
+import org.maktab.exceptionHandling.base.BaseService;
 import org.maktab.exceptionHandling.entities.Library;
 
 import java.sql.SQLException;
 
-public interface LibraryService {
+public abstract class LibraryService extends BaseService<Library> {
 
-    void save(Library library) throws SQLException;
+    protected abstract Library loadById(int id) throws SQLException;
 
-    Library load(Library library)throws SQLException;
-
-    Library loadById(int id) throws SQLException;
-
-    void edit(Library library , String name , int capacity)throws SQLException;
-
-    void delete(Library library)throws SQLException;
-
-    int getMemberCount(String firstName, String lastName) throws SQLException;
-
-    void isFull(Library library)throws SQLException;
+    protected abstract void isFull(Library library) throws SQLException;
 
 }
